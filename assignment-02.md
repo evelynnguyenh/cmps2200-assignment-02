@@ -15,124 +15,75 @@ and push to your github repository.
 Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)=2W(n/3)+1$
-.  
-.  
-. 
-.  
-. 
-.  
-. 
+=> n^(log_3 2) = n^0.63
+=> W(n) = Θ(n^(log_3 2))
+
  
 * $W(n)=5W(n/4)+n$
-.  
-.
-.  
-. 
-.  
-. 
-.  
-.  
-. 
+=> n^(log_4 5) ≈ n^1.16
+=> W(n) = Θ(n^(log_4 5))
+
 
 * $W(n)=7W(n/7)+n$
-.  
-. 
-.  
-.  
-. 
-.  
-.
+=> n^(log_7 7) = n
+=> W(n) = Θ(n log n) 
 
 * $W(n)=9W(n/3)+n^2$
-.  
-.
-. 
-.  
-. 
-.  
-.  
-.  
-.
+=> n^(log_3 9) = n^2
+=> W(n) = Θ(n^2 log n)
+
 
 * $W(n)=8W(n/2)+n^3$
-.  
-.
-.  
-.  
-.  
-.  
-. 
-.  
-. 
-
+=> n^(log_2 8) = n^3
+=> W(n) = Θ(n^3 log n)
 
 * $W(n)=49W(n/25)+n^{3/2}\log n$
-.  
-.  
-. 
-.  
-. 
-.  
-.  
-.  
+=> n^(log_25 49) ≈ n^1.13 < n^(3/2)
+=> W(n) = Θ(n^(3/2) log n)
 
 * $W(n)=W(n-1)+2$
-.  
-.  
-. 
-.  
-. 
-.  
-.  
-.  
+=> Linear recurrence
+=> W(n) = O(n)
 
 * $W(n)= W(n-1)+n^c$, with $c\geq 1$
-.  
-.  
-.  
-.  
-.  
-. 
-.  
-. 
+=> Sum of powers → O(n^(c+1))
+=> W(n) = Θ(n^(c+1))
 
 * $W(n)=W(\sqrt{n})+1$
-.  
-.  
-.  
-.  
-.  
-. 
-. 
+Let n = 2^(2^k) ⇒ k = log log n
+=> W(n) = O(log log n)
 
 
 ## Part 2. Algorithm Comparison
 
 Suppose that for a given task you are choosing between the following three algorithms:
 
+    What are the asymptotic running times of each of these algorithms?
+    Which algorithm would you choose? 
+
   * Algorithm $\mathcal{A}$ solves problems by dividing them into
       five subproblems of half the size, recursively solving each
       subproblem, and then combining the solutions in linear time.
+
+    T(n) = 5T(n/2) + O(n)  
+    => W(n) = Θ(n^(log_2 5)) ≈ Θ(n^2.32)
     
   * Algorithm $\mathcal{B}$ solves problems of size $n$ by
       recursively solving two subproblems of size $n-1$ and then
       combining the solutions in constant time.
+
+    T(n) = 5T(n/2) + O(n)  
+    => W(n) = Θ(n^(log_2 5)) ≈ Θ(n^2.32)
     
   * Algorithm $\mathcal{C}$ solves problems of size $n$ by dividing
       them into nine subproblems of size $n/3$, recursively solving
       each subproblem, and then combining the solutions in $O(n^2)$
       time.
+    
+    T(n) = 9T(n/3) + O(n^2)  
+    => W(n) = Θ(n^2 log n)
 
-    What are the asymptotic running times of each of these algorithms?
-    Which algorithm would you choose?
-
-
-.  
-.  
-.  
-.  
-. 
-. 
+    Best choice: Algorithm C, because n^2 log n grows slower than n^2.32 or 2^n.
 
 
 
@@ -160,10 +111,8 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **3b.** What are the recurrences for the Work and Span of this solution? What are their Big Oh solutions?
 
-**enter answer here**
-
-.  
-. 
+- W(n) = O(n)  
+- S(n) = O(1)
 
 
 
@@ -176,12 +125,8 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **3d.** Assume that any `map`s are done in parallel, and that we use the efficient implementation of `scan` from class. What are the recurrences for the Work and Span of this solution? 
 
-**enter answer here**
-
-.  
-.  
-
-
+- W(n) = O(n)  
+- S(n) = O(log n)
 
 
 **3e. divide and conquer solution** Implement `parens_match_dc_helper`, a divide and conquer solution to the problem. A key observation is that we *cannot* simply solve each subproblem using the above solutions and combine the results. E.g., consider '((()))', which would be split into '(((' and ')))', neither of which is matched. Yet, the whole input is matched. Instead, we'll have to keep track of two numbers: the number of unmatched right parentheses (R), and the number of unmatched left parentheses (L). `parens_match_dc_helper` returns a tuple (R,L). So, if the input is just '(', then `parens_match_dc_helper` returns (0,1), indicating that there is 1 unmatched left parens and 0 unmatched right parens. Analogously, if the input is just ')', then the result should be (1,0). The main difficulty is deciding how to merge the returned values for the two recursive calls. E.g., if (i,j) is the result for the left half of the list, and (k,l) is the output of the right half of the list, how can we compute the proper return value (R,L) using only i,j,k,l? Try a few example inputs to guide your solution, then test with `test_parens_match_dc_helper`.
@@ -197,12 +142,13 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **3f.** Assuming any recursive calls are done in parallel, what are the recurrences for the Work and Span of this solution? What are their Big Oh solutions?
 
-**enter answer here**
+- W(n) = 2W(n/2) + O(1) = O(n)  
+- S(n) = S(n/2) + O(1) = O(log n)
 
-.  
-. 
-
-
+- Summary:  
++ Iterative: Work = O(n), Span = O(1)  
++ Scan: Work = O(n), Span = O(log n)  
++ Divide and Conquer: Work = O(n), Span = O(log n)
  
  
 

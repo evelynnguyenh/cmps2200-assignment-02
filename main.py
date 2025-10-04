@@ -6,6 +6,15 @@ from collections import defaultdict
 import math
 
 #### Iterative solution
+
+def iterate(update_fn, seq, start):
+    result = start
+    for x in seq:
+        result = update_fn(result, x)
+        if result == -math.inf:  
+            break
+    return result
+
 def parens_match_iterative(mylist):
     """
     Implement the iterative solution to the parens matching problem.
@@ -23,7 +32,8 @@ def parens_match_iterative(mylist):
     False
     """
     ### TODO
-    return iterate(parens_update, 0, mylist) == 0
+    return iterate(parens_update, mylist, 0) == 0
+
     ###
 
 
@@ -79,7 +89,17 @@ def parens_match_scan(mylist):
     ###TODO
     history, last = scan(plus, 0, list(map(paren_map, mylist)))
     return last == 0 and reduce(min_f, 0, history) >= 0
-    ###
+
+def plus(x, y):
+    return x + y
+
+
+def reduce(f, id_, a):
+    result = id_
+    for x in a:
+        result = f(result, x)
+    return result
+
 
 def scan(f, id_, a):
     """
@@ -151,7 +171,7 @@ def parens_match_dc_helper(mylist):
     ###TODO
     # Base cases
     if len(mylist) == 0:
-        return [0,0]
+        return (0,0)
     elif len(mylist) == 1:
         if mylist[0] == '(':
             return (0, 1) # one unmatched (
