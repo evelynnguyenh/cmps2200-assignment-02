@@ -16,30 +16,30 @@ Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)=2W(n/3)+1$
 => n^(log_3 2) = n^0.63
-=> W(n) = Θ(n^(log_3 2))
+=> W(n) = O(n^(log_3 2))
 
  
 * $W(n)=5W(n/4)+n$
 => n^(log_4 5) ≈ n^1.16
-=> W(n) = Θ(n^(log_4 5))
+=> W(n) = O(n^(log_4 5))
 
 
 * $W(n)=7W(n/7)+n$
 => n^(log_7 7) = n
-=> W(n) = Θ(n log n) 
+=> W(n) = O(n log n) 
 
 * $W(n)=9W(n/3)+n^2$
 => n^(log_3 9) = n^2
-=> W(n) = Θ(n^2 log n)
+=> W(n) = O(n^2 log n)
 
 
 * $W(n)=8W(n/2)+n^3$
 => n^(log_2 8) = n^3
-=> W(n) = Θ(n^3 log n)
+=> W(n) = O(n^3 log n)
 
 * $W(n)=49W(n/25)+n^{3/2}\log n$
 => n^(log_25 49) ≈ n^1.13 < n^(3/2)
-=> W(n) = Θ(n^(3/2) log n)
+=> W(n) = O(n^(3/2) log n)
 
 * $W(n)=W(n-1)+2$
 => Linear recurrence
@@ -47,7 +47,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)= W(n-1)+n^c$, with $c\geq 1$
 => Sum of powers → O(n^(c+1))
-=> W(n) = Θ(n^(c+1))
+=> W(n) = O(n^(c+1))
 
 * $W(n)=W(\sqrt{n})+1$
 Let n = 2^(2^k) ⇒ k = log log n
